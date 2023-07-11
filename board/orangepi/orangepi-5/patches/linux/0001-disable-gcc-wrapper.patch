@@ -1,0 +1,22 @@
+diff --git a/Makefile b/Makefile
+index 6bbc15bea093..f7adb9c88f28 100644
+--- a/Makefile
++++ b/Makefile
+@@ -482,11 +482,12 @@ ZSTD		= zstd
+ 
+ # Use the wrapper for the compiler. This wrapper scans for new
+ # warnings and causes the build to stop upon encountering them.
+-ifeq ($(CC),$(CROSS_COMPILE)gcc)
+-ifneq ($(wildcard $(srctree)/scripts/gcc-wrapper.py),)
+-CC		= $(abspath $(srctree)/scripts/gcc-wrapper.py) $(CROSS_COMPILE)gcc
+-endif
+-endif
++# Do not use the wrapper now. Gcc 12 will emit quit a lot warnings
++# ifeq ($(CC),$(CROSS_COMPILE)gcc)
++# ifneq ($(wildcard $(srctree)/scripts/gcc-wrapper.py),)
++# CC		= $(abspath $(srctree)/scripts/gcc-wrapper.py) $(CROSS_COMPILE)gcc
++# endif
++# endif
+ 
+ CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
+ 		  -Wbitwise -Wno-return-void -Wno-unknown-attribute $(CF)

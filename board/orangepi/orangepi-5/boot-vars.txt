@@ -1,0 +1,3 @@
+fdtfile=rockchip/rk3588s-orangepi-5.dtb
+kernelname=Image
+overlays=rk3588-ov13850-c3

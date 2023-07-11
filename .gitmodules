@@ -1,0 +1,3 @@
+[submodule "board/orangepi/orangepi-5/rkbin"]
+	path = board/orangepi/orangepi-5/rkbin
+	url = https://github.com/rockchip-linux/rkbin.git
