@@ -1,0 +1,127 @@
+menuconfig BR2_PACKAGE_ROCKCHIP
+	bool "Rockchip Platform"
+
+if BR2_PACKAGE_ROCKCHIP
+
+config BR2_PACKAGE_ROCKCHIP_HAS_ISP1
+	bool
+	help
+	  Has Rockchip ISP1
+
+config BR2_PACKAGE_ROCKCHIP_HAS_ISP2
+	bool
+	help
+	  Has Rockchip ISP2
+
+config BR2_PACKAGE_ROCKCHIP_HAS_ISP3
+	bool
+	help
+	  Has Rockchip ISP3
+
+choice
+	default BR2_PACKAGE_RK3588
+	prompt "Rockchip SoC"
+
+config BR2_PACKAGE_PX30
+	bool "px30 chip"
+	select BR2_PACKAGE_ROCKCHIP_HAS_ISP1
+	help
+	  Use rockchip's px30 chip
+
+config BR2_PACKAGE_RK3036
+	bool "rk3036 chip"
+	help
+	  Use rockchip's rk3036 chip
+
+config BR2_PACKAGE_RK312X
+	bool "rk312x chip"
+	select BR2_PACKAGE_ROCKCHIP_HAS_ISP1
+	help
+	  Use rockchip's rk312x chip
+
+config BR2_PACKAGE_RK3288
+	bool "rk3288 chip"
+	select BR2_PACKAGE_ROCKCHIP_HAS_ISP1
+	help
+	  Use rockchip's rk3288 chip
+
+config BR2_PACKAGE_RK3308
+	bool "rk3308 chip"
+	help
+	  Use rockchip's rk3308 chip
+
+config BR2_PACKAGE_RK3326
+	bool "rk3326 chip"
+	select BR2_PACKAGE_ROCKCHIP_HAS_ISP1
+	help
+	  Use rockchip's rk3326 chip
+
+config BR2_PACKAGE_RK3358
+	bool "rk3358 chip"
+	select BR2_PACKAGE_ROCKCHIP_HAS_ISP1
+	help
+	  Use rockchip's rk3358 chip
+
+config BR2_PACKAGE_RK3399
+	bool "rk3399 chip"
+	select BR2_PACKAGE_ROCKCHIP_HAS_ISP1
+	help
+	  Use Rockchip's rk3399 SoC
+
+config BR2_PACKAGE_RK3399PRO
+	bool "rk3399pro chip"
+	select BR2_PACKAGE_ROCKCHIP_HAS_ISP1
+	help
+	  Use Rockchip's rk3399pro SoC
+
+config BR2_PACKAGE_RK3528
+	bool "rk3528 chip"
+	help
+	  Use Rockchip's rk3528 SoC
+
+config BR2_PACKAGE_RK3562
+	bool "rk3562 chip"
+	select BR2_PACKAGE_ROCKCHIP_HAS_ISP2
+	help
+	  Use Rockchip's rk3562 SoC
+
+config BR2_PACKAGE_RK3566_RK3568
+	bool "rk3566 or rk3568 chip"
+	select BR2_PACKAGE_ROCKCHIP_HAS_ISP2
+	help
+	  Use Rockchip's rk3566 or rk3568 SoC
+
+config BR2_PACKAGE_RK3588
+	bool "rk3588"
+	select BR2_PACKAGE_ROCKCHIP_HAS_ISP3
+	help
+	  Use Rockchip's rk3588 SoC
+
+endchoice
+
+# Camera Engine packages
+config BR2_PACKAGE_CAMERA_ENGINE
+	bool "Rockchip Camera Engine For ISP"
+	depends on BR2_PACKAGE_ROCKCHIP_HAS_ISP1 || BR2_PACKAGE_ROCKCHIP_HAS_ISP2 || BR2_PACKAGE_ROCKCHIP_HAS_ISP3
+	select BR2_PACKAGE_CAMERA_ENGINE_RKISP if BR2_PACKAGE_ROCKCHIP_HAS_ISP1
+	select BR2_PACKAGE_CAMERA_ENGINE_RKAIQ if BR2_PACKAGE_ROCKCHIP_HAS_ISP2
+	select BR2_PACKAGE_CAMERA_ENGINE_RKAIQ if BR2_PACKAGE_ROCKCHIP_HAS_ISP3
+	help
+	  Depend on Chip Type, there are different camera_engine packages.
+	  Enable this config to choose camera_engine package by chip automatically.
+
+config BR2_PACKAGE_ROCKCHIP_SDK_VERSION
+	string "Rockchip SDK version"
+	default rk3588/linux_release_v1.1.1a
+	help
+		Rockchip SDK version, tag of firefly gitlab repository
+
+menu "Rockchip BSP packages"
+	source "package/rockchip/camera-engine-rkaiq/Config.in"
+	source "package/rockchip/camera-engine-rkisp/Config.in"
+	source "package/rockchip/rockchip-mpp/Config.in"
+	source "package/rockchip/rockchip-rga/Config.in"
+	source "package/rockchip/rkwifibt/Config.in"
+endmenu
+
+endif
